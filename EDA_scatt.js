@@ -81,14 +81,14 @@ export async function renderScatterPlot() {
     const margin = { top: 20, right: 10, bottom: 50, left: 40 };
 
     const svg = d3
-        .select('#EDA-chart')
+        .select('#chart1')
         .append('svg')
         .attr('viewBox', `0 0 ${width} ${height}`)
         .attr('width', width) 
         .attr('height', height);
 
     // add a message to show the accuracy of line user drawn
-    d3.select('#EDA-chart')
+    d3.select('#chart1')
         .append('p')
         .attr('id', 'feedback-message')
         .style('font-size', '20px')
