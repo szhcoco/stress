@@ -81,11 +81,20 @@ export async function renderScatterPlot() {
     const margin = { top: 20, right: 10, bottom: 50, left: 40 };
 
     const svg = d3
-        .select('#chart2')
+        .select('#HR-chart')
         .append('svg')
         .attr('viewBox', `0 0 ${width} ${height}`)
         .attr('width', width) 
         .attr('height', height);
+        
+    // add a message to show the accuracy of line user drawn
+    d3.select('#HR-chart')
+        .append('p')
+        .attr('id', 'feedback-message')
+        .style('font-size', '20px')
+        .style('margin-top', '10px')
+        .style('color', '#333')
+        .style('font-weight', 'bold');
 
     const {xScale, yScale, usableArea} = await getHRScales(Promise.resolve(data), width, height, margin);
     
@@ -187,7 +196,7 @@ export async function renderScatterPlot() {
         .attr('width', usableArea.right - usableArea.left)
         .attr('height', usableArea.bottom - usableArea.top)
         .style('fill', 'transparent')
-        .style('cursor', 'crosshair');
+        .style('cursor', 'pointer');
 
     // Line to display user's drawing
     const userLine = svg.append('line')
@@ -201,6 +210,8 @@ export async function renderScatterPlot() {
     let startPoint = null;
 
     svg.select('.draw-overlay')
+        .style('pointer-events', 'all')
+        .style('fill', 'transparent')
         .on('mousedown', (event) => {
             if (hasDrawn) return; 
             isDrawing = true;
@@ -215,7 +226,7 @@ export async function renderScatterPlot() {
         })
         .on('mousemove', (event) => {
             if (!isDrawing) return;
-            const [mx, my] = d3.pointer(event);
+            const [mx, my] = d3.pointer(event, svg.node());
             userLine.attr('x2', mx).attr('y2', my);
         })
         .on('mouseup', (event) => {
@@ -317,12 +328,26 @@ export async function renderScatterPlot() {
     
     function showBestFitLine(userCoords) {
 
+        const ux1 = xScale.invert(userCoords.x1);
+        const uy1 = yScale.invert(userCoords.y1);
+        const ux2 = xScale.invert(userCoords.x2);
+        const uy2 = yScale.invert(userCoords.y2);
+
+        const userSlope = (uy2 - uy1) / (ux2 - ux1);
+        const userIntercept = uy1 - userSlope * ux1;
+
+        const [xMin, xMax] = d3.extent(data, d => d.avg_HR);
+        const userLinePoints = [
+            { x: xMin, y: userSlope * xMin + userIntercept },
+            { x: xMax, y: userSlope * xMax + userIntercept }
+        ];
+
         bestFitLine
             .attr('visibility', 'visible')
-            .attr('x1', userCoords.x1)
-            .attr('y1', userCoords.y1)
-            .attr('x2', userCoords.x2)
-            .attr('y2', userCoords.y2)
+            .attr('x1', xScale(userLinePoints[0].x))
+            .attr('y1', yScale(userLinePoints[0].y))
+            .attr('x2', xScale(userLinePoints[1].x))
+            .attr('y2', yScale(userLinePoints[1].y))
             .transition()
             .duration(2000)
             .attr('x1', xScale(bestFitLinePoints[0].x))
@@ -337,11 +362,33 @@ export async function renderScatterPlot() {
             .style('opacity', 0.8);
         
         hasDrawn = true;
+
+        const mse = d3.mean(data, d => {
+            const yUser = userSlope * d.avg_HR + userIntercept;
+            const yTrue = slope * d.avg_HR + intercept;
+            return (yUser - yTrue) ** 2;
+        });
+
+        //normalize the error
+        const maxPossibleError = d3.variance(data.map(d => d.score));
+        const accuracy = 100 * (1 - mse / maxPossibleError);
+
+        // restrict the accuracy to be always within [0, 100]
+        const clampedAccuracy = Math.max(0, Math.min(accuracy, 100));
+
+        // show message abased on the accuracy
+        const messageBox = d3.select('#feedback-message');
+        if (clampedAccuracy >= 70) {
+            messageBox.text(`🎉 Great job! Your hypothesis matches the output. Accuracy: ${clampedAccuracy.toFixed(1)}%`);
+        } else {
+            messageBox.text(`📉 Nice try, but the actual output is a bit different. Accuracy: ${clampedAccuracy.toFixed(1)}%`);
+        }
+
     }
 }
 
 
 // const data = loadData();
-// console.log(data);
+// // console.log(data);
 
 // renderScatterPlot();
