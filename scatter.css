@@ -1,43 +1,86 @@
+/* Basic Reset and Body Style */
 body {
     margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #222;
+  }
+  
+  /* Paragraphs */
+  p {
+    max-width: 800px;
+    margin: 10px auto;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  /* Container for layouts */
+  #layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  
+  /* SVG styling for responsiveness */
+  svg {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+  }
+  
+  /* Tooltip styles */
+  .tooltip {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    pointer-events: none;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
 
+  /* Layout: side-by-side chart and container */
 #layout {
     display: flex;
-    height: calc(100vh - 50px);
-}
-
-/* #chart1, #chart2, #chart3, #chart4 */
-#chart, #container {
+    flex-direction: row; /* key change */
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 30px;
+  }
+  
+  /* Each panel takes ~50% */
+  #chart, #container {
     flex: 1;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow: auto;
-}
-
-svg {
-    width: 100%;
-    height: auto;
-}
-
-h1, h2 {
-    text-align: center;
-    margin: 10px 0;
-}
-
-
-.tooltip {
-    width: 180px;
-    margin-right: 20px;
-    position: absolute; 
-    /* position:fixed; */
-    background-color: white;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    pointer-events: none;
-    font-size: 12px;
-    align-items: left;
-}
+    max-width: 45%;
+  }
+  
+  /* Ensure the subplot in #main has enough room */
+  #main {
+    margin-top: 10px;
+  }
+  
+  /* Tooltip stays absolute (unchanged) */
+  .tooltip {
+    position: absolute;
+  }
+  
+  
+  /* Additional styling for specific IDs or classes can be added as needed */
