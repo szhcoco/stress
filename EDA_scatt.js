@@ -238,6 +238,7 @@ export async function renderScatterPlot() {
 
             // Ensure dots group is above overlay for interactivity
             svg.select('.dots').raise();
+            d3.select('#chart').append('p').text('Although we might expect a positive correlation between average EDA and academic performance, the scatter plot here does not show a clear trend. The data points appear to be scattered without a strong pattern, but notably there are no points in the lower right corner, indicating that it is unlikely to have high EDA and low grades.');
         });
 
 

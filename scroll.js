@@ -24,7 +24,7 @@ function addDiv() {
     d3.select('body').append('div').attr('id', 'layout');
     d3.select('#layout').append('div').attr('id', 'chart');
     d3.select('#layout').append('div').attr('id', 'container');
-    d3.select('#container').append('div').attr('id', 'tooltip').attr('style', 'opacity: 0;');
+    d3.select('#container').append('div').attr('class', 'tooltip').attr('style', 'opacity: 0;');
     d3.select('#container').append('div').attr('id', 'main');
     d3.select('#main').append('h4').attr('id', 'student-name');
     d3.select('#main').append('svg').attr('id', 'test').attr('height', '200px');
@@ -48,28 +48,33 @@ function showSlide(slideIndex) {
     case 1:
         removeAll();
         addDiv();
-        d3.select('#chart').append('p').text('explanation for HR');
+        d3.select('#chart').append('h3').text('Heart Rate (HR)');
+        d3.select('#chart').append('p').text('Heart rate in our data is measured in beats per minute (BPM). A typical resting heart rate ranges between 60 and 100 BPM, while values above 100 BPM may be an indication of stress. What do you think the relationship is between heart rate and academic performance? Try drawing a line in the scatter plot below to test your hypothesis—where the x-axis represents the average heart rate during the test, and the y-axis shows the weighted test score.');
         d3.select('#chart').append('div').attr('id', 'chart2');
         HR_scatt.renderScatterPlot();
         break;
     case 2:
         removeAll();
         addDiv();
-        d3.select('#chart').append('p').text('explanation for EDA');
+        d3.select('#chart').append('h3').text('Electrodermal Activity (EDA)');
+        d3.select('#chart').append('p').text('EDA (Electrodermal Activity) measures skin conductance, which varies in response to emotional or sympathetic arousal. Feelings of stress, anxiety, or perceived danger would cause values for EDA to increase. Just like what you did for the heart rate plot, try drawing a line below to explore how EDA levels might be correlated with academic performance.');
         d3.select('#chart').append('div').attr('id', 'chart1');
         EDA_scatt.renderScatterPlot();
         break;
     case 3:
         removeAll();
         addDiv();
-        d3.select('#chart').append('p').text('explanation for TEMP');
+        d3.select('#chart').append('h3').text('Temperature');
+        d3.select('#chart').append('p').text('We also investigate the relationship between stress, through the measure of temperature (in degrees Celsius), and students’ exam performance.');
+        d3.select('#chart').append('p').text('By hovering over the points in the scatter plot, we can observe how temperature changes throughout the tests. A common pattern is a rise in temperature at the beginning of the exam. and sometimes a decline towards the end. This might serve as evidence to support the fact that sympathetic responses, such as feelings of stress or anxiety, could lead to increase in temperature.');
         d3.select('#chart').append('div').attr('id', 'chart3');
         TEMP_scatt.renderScatterPlot();
         break;
     case 4:
         removeAll();
         addDiv();
-        d3.select('#chart').append('p').text('explanation for ACC');
+        d3.select('#chart').append('h3').text('Acceleration (ACC)');
+        d3.select('#chart').append('p').text('The accelerometer gives us acceleration data measured in x (left and right), y (forward and backward) and z (up and down) dimensions. We transform the data by taking the magnitude from three dimensions, with unit = 1/64g, which is 0.153 m/s².');
         d3.select('#chart').append('div').attr('id', 'chart4');
         ACC_scatt.renderScatterPlot();
         break;

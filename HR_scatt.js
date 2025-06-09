@@ -242,6 +242,7 @@ export async function renderScatterPlot() {
 
             // Ensure dots group is above overlay for interactivity
             svg.select('.dots').raise();
+            d3.select('#chart').append('p').text('Based on the dataset we have, we do find a positive correlation between heart rate and academic performance. Students with higher average heart rate during the test tend to have higher scores for the exam. ');
         });
 
 
