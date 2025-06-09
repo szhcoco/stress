@@ -27,7 +27,7 @@ function addDiv() {
     d3.select('#container').append('div').attr('class', 'tooltip').attr('style', 'opacity: 0;');
     d3.select('#container').append('div').attr('id', 'main');
     d3.select('#main').append('h4').attr('id', 'student-name');
-    d3.select('#main').append('svg').attr('id', 'test').attr('height', '200px');
+    d3.select('#main').append('svg').attr('id', 'test').attr('width', '2000px').attr('height', '1800px');
 }
 
 //show the slide
