@@ -18,19 +18,20 @@ export function createPlot(svg, student, exam) {
     draw(student, exam, xScale, yScale, xAxisGroup, yAxisGroup, g, width, height, margin);
 }
 
-const tooltip = d3.select(".tooltip");
+
 
 function setupTooltip(selection, field) {
-  selection
-    .on("mouseover", (event, d) => {
-      tooltip.transition().duration(200).style("opacity", .9);
-      tooltip.html(`${field}: ${d[field]}<br/>Time: ${d.time_seconds}s<br/>Timestamp: ${d.timestamp}<br/>Period: ${d.period}`)
-             .style("left", `${event.pageX + 10}px`)
-             .style("top", `${event.pageY - 28}px`);
-    })
-    .on("mouseout", () => {
-      tooltip.transition().duration(500).style("opacity", 0);
-    });
+    const tooltip = d3.select("#container .tooltip");
+    selection
+        .on("mouseover", (event, d) => {
+        tooltip.transition().duration(200).style("opacity", .9);
+        tooltip.html(`${field}: ${d[field]}<br/>Time: ${d.time_seconds}s<br/>Timestamp: ${d.timestamp}<br/>Period: ${d.period}`)
+                .style("left", `${event.pageX + 10}px`)
+                .style("top", `${event.pageY - 28}px`);
+        })
+        .on("mouseout", () => {
+        tooltip.transition().duration(500).style("opacity", 0);
+        });
 }
 
 

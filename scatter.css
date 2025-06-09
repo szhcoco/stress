@@ -88,10 +88,9 @@ body {
     margin-top: 10px;
   }
   
-  /* Tooltip stays absolute (unchanged) */
-  .tooltip {
-    position: absolute;
-  }
+
+
+
   
   /* Additional styling for specific IDs or classes can be added as needed */
 
