@@ -9,13 +9,22 @@ body {
   }
   
   /* Headings */
-  h1, h2, h3, h4 {
+  #head, .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h3, h4 {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 10px;
     color: #222;
   }
   
+  /* div containing paragraphs for the second page*/
   /* Paragraphs */
   p {
     max-width: 800px;
@@ -25,17 +34,18 @@ body {
   }
   
   /* Container for layouts */
-  #layout {
+  /* #layout {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px auto;
     margin-top: 20px;
   }
-  
+   */
   
   /* SVG styling for responsiveness */
   svg {
-    width: 50%;
+    width: 100%;
     height: auto;
     margin: 0 auto;
   }
@@ -62,7 +72,8 @@ body {
     flex-direction: row; /* key change */
     justify-content: space-around;
     align-items: flex-start;
-    margin-top: 20px;
+    margin: 10px auto;
+    /* margin-top: 20px; */
     gap: 30px;
   }
   
@@ -82,5 +93,8 @@ body {
     position: absolute;
   }
   
-  
   /* Additional styling for specific IDs or classes can be added as needed */
+
+#container {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
